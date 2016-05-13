@@ -3,10 +3,17 @@ var appControllers = angular.module("appControllers",[]);
 appControllers.
 	controller("CentreCubeCtrl",["$scope","$http","$routeParams","$timeout","FormData", function($scope,$http,$routeParams,$timeout,formData) {
 		var url = "api/bi/parser";
-		// var url = "data/data.json";
+		
 		var parsedParam = formData.parseParam( formData.defaultFormValues );
 
 		$http.get(url, {params: parsedParam}).success(function(data){
+			$scope.hasNoResult = false;
+			if(Object.keys(data).length == 0) {
+				console.log("empty");
+				$scope.hasNoResult = true;
+				return;
+			}
+			
 			$scope.data = data;
 			
 			$scope.$emit("current_cube", data);
@@ -17,9 +24,15 @@ appControllers.
 		$scope.$on("data_changed", getNewData);		//watch data changes
 
 		function getNewData(e, queryParams) {
+			$scope.hasNoResult = false;
 			//get data 
-			// var newUrl = 'data/data2';
 			$http.get(url, {params: queryParams}).success(function(newData){
+				if(Object.keys(newData).length == 0) {
+					console.log("empty");
+					$scope.hasNoResult = true;
+					return;
+				}
+				console.log(newData);
 				$scope.$emit("current_cube", newData);
 				$scope.$emit("new_cardinals", formData.parseCardinalValues(newData));
 				
@@ -68,7 +81,7 @@ appControllers.
 		};
 
 		$scope.dimensionCheck = function(form) {
-			// console.log(form);
+			 console.log(form);
 			var dim = form.dimension;
 			var keys = Object.keys(dim);
 			var uncheckedDimension = 0;

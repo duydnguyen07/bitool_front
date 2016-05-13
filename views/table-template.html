@@ -1,4 +1,8 @@
+
 <table class="table table-reflow" ng-if="visible">
+	<div class="alert alert-info" role="alert" ng-show="hasNoResult">
+		<strong>Oh snap!</strong> No result found.
+	</div>
   <thead>
     <tr>
       <th ng-repeat="attr in data.attributes">
