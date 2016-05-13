@@ -1,0 +1,17 @@
+<table class="table table-reflow" ng-if="visible">
+  <thead>
+    <tr>
+      <th ng-repeat="attr in data.attributes">
+      {{attr}}
+      </th>
+      <th>Sales Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="d in data.data">      
+      <td ng-repeat="key in d.key">{{key}}</td>
+      <td>{{d.value}}</td>
+    </tr>
+  </tbody>
+</table>
+

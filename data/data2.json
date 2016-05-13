@@ -1,0 +1,15 @@
+{
+	"dimension": ["Product","Store","Date_time"],
+	"attributes": ["category","state", "year"],
+	"data": [
+		{
+		 	"key": ["Drinks","AZ","200"],
+		 	"value": "11312"
+		}, 
+		{
+		 	"key": ["Drinks","AZ","1995"],
+		 	"value": "1009838"
+		}
+		
+	]
+}

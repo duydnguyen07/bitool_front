@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <title>BI-Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap style sheet -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+   
+  </head>
+  
+  <body class="ng-cloak" ng-app="app">
+    <div class="container" ng-controller="OptionsCtrl">
+    	<h1>BI tool</h1>
+	    <div class="row" >
+			<!-- Table section -->
+			<div class="col-md-7" ng-view>
+				<!-- Content here -->
+			</div> <!-- END Table section -->
+			
+			<!-- Option section -->
+			<div class="col-md-5" >
+				<div class="alert alert-danger" role="alert" ng-show="dimensionErrorDice">
+					<strong>Oh snap!</strong> Please select at least 2 dimensions.
+				</div>
+				<div class="alert alert-danger" role="alert" ng-show="dimensionErrorSlice">
+					<strong>Oh snap!</strong> Please select only 1 dimension.
+				</div>
+				<div class="alert alert-danger" role="alert" ng-show="dimensionError">
+					<strong>Oh snap!</strong> Please select at least 1 dimension.
+				</div>
+				<div class="alert alert-danger" role="alert" ng-show="dimensionErrorCentralCube">
+					<strong>Oh snap!</strong> Please select all 3 dimensions.
+				</div>
+				<form class="form">
+			   		<div class="form-group col-md-3">
+					<!-- Action -->
+			      	<h3>Action</h3>
+					<div >
+					  	<label>
+					  		<select class="c-select" ng-model="form.action" ng-change="dimensionCheck(form)">
+					  		  <option value="central_cube">Central Cube</option>
+							  <option value="roll_up">Roll Up</option>
+							  <option value="drill_down">Drill Down</option>
+							  <option value="slice">Slice</option>
+							  <option value="dice">Dice</option>
+							</select>
+						</label>
+					</div> <!-- END Action Section -->
+				</div>
+	   			<div class="form-group col-md-4">
+			      	<!-- Dimension Section -->
+			      	<h3>Dimensions</h3>
+					<div class="checkbox">
+					  <label><input type="checkbox" ng-model="form.dimension.date_time" ng-click="dimensionCheck(form)">Date_time</label>
+					</div>
+					<div class="checkbox">
+					  <label><input type="checkbox" ng-model="form.dimension.store" ng-click="dimensionCheck(form)">Store</label>
+					</div>
+					<div class="checkbox">
+					  <label><input type="checkbox" ng-model="form.dimension.product" ng-click="dimensionCheck(form)">Product</label>
+					</div> <!-- END Dimension Section -->
+					
+				</div>
+				<div class="form-group col-md-5">
+					<!-- Attribute Section -->
+			      	<h3>Attributes</h3>
+					<!-- Date-time Attribute -->
+					<div > 
+					  	<label>
+					  		<select class="c-select" ng-model="form.category.date_time">
+							  <option value="year">Year</option>
+							  <option value="quarter">Quarter</option>
+							  <option value="month">Month</option>
+							  <option value="date">Date</option>
+							</select>
+						</label>
+					</div>
+					<!-- Store -->
+					<div >
+					  	<label>
+					  		<select class="c-select" ng-model="form.category.store">
+							  <option value="store_zip">Zipcode</option>
+							  <option value="store_state">State</option>
+							  <option value="store_county">County</option>
+							  <option value="city">City</option>
+							  <option value="store_street_address">Street Addess</option>
+							  <option value="name">Name</option>
+							</select>
+						</label>
+					</div>
+					<div >
+					  	<label>
+					  		<select class="c-select" ng-model="form.category.product">
+					  		<!-- Product -->
+							  <option value="department">Department</option>
+							  <option value="category">Category</option>
+							  <option value="sub_category">Sub Category</option>
+							  <option value="brand">Brand</option>
+							  <option value="package_size">Package Size</option>
+							  <option value="description">Description</option>
+							</select>
+						</label>
+					</div> <!-- END Attribute Section -->
+
+				</div>
+				<!-- Cardinal Values -->
+				<div class="col-md-12" ng-show="form.action == 'slice' || form.action == 'dice'">
+					<h3>Cardinal Values</h3>
+					<div class="alert alert-danger" role="alert" ng-show="cardinalError">
+						<strong>Oh snap!</strong> Please select at least 1 cardinal value per attribute.
+					</div>
+					<div class="form-group col-md-4" ng-repeat="(attr, cardinalArr) in form.cardinals">
+						<h4>{{attr}}</h4>
+						<div class="checkbox" ng-repeat="card in cardinalArr" >
+						  	<label >
+						  		<input type="checkbox" ng-model="form.cardinals[attr][card]" value="{{card}}">{{card}}
+						  	</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">	
+					<!-- <button type="submit" class="btn btn-default" onclick="window.location.hash = '#'">Reset Cube</button> -->
+					<button type="submit" class="btn btn-primary pull-right" ng-click="changeView(form)" ng-disabled="disable">Submit</button>
+				</div>
+			</form> 
+			</div> <!-- END Option section -->
+	    </div>
+    </div>
+    
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
+    <!-- Jquery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Bootstrap Library -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
