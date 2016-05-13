@@ -54,7 +54,8 @@ appControllers.
 		$scope.dimensionError = false;
 		$scope.dimensionErrorDice = false;
 		$scope.cardinalError = false;
-
+		
+		
 		$scope.currentCube = {};
 
 		$scope.$on("current_cube", function(e, data) {		//listen for current cube
@@ -107,7 +108,8 @@ appControllers.
 			} else if (uncheckedDimension > 0 && form["action"] == "central_cube") { //no dimension selected
 				$scope.disable = true;
 				$scope.dimensionErrorCentralCube = true;
-			} else if (uncheckedDimension > 2) {
+			} 
+			else if (uncheckedDimension > 2) {
 				$scope.disable = true;
 				$scope.dimensionError = true;
 			}
